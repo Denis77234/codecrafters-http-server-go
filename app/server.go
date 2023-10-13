@@ -23,4 +23,6 @@ func main() {
 		fmt.Println(err)
 	}
 
+	conn.Close()
+
 }
