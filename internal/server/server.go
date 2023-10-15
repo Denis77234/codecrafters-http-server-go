@@ -18,6 +18,7 @@ type (
 		WriteStatus(header status)
 		WriteContentType(ct string)
 		WriteBody(body []byte)
+		write(conn net.Conn)
 	}
 
 	Server struct {
@@ -74,6 +75,7 @@ func (s *Server) Start() error {
 	for _, h := range s.handlers {
 		if h.path == req.URL.Path {
 			h.hadlerFunc(req, h.responseWriter)
+			h.responseWriter.write(conn)
 		}
 	}
 	return nil
