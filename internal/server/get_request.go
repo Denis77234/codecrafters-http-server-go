@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"net"
 	"strings"
 )
@@ -40,24 +39,7 @@ func parseRequest(req []byte) Request {
 func parseURL(urlStr string) URL {
 	url := URL{}
 
-	urlValues := strings.Split(urlStr, "/")
-	valuesLen := len(urlValues)
-
-	if valuesLen == 2 {
-		pathStr := strings.Join(urlValues, "/")
-		url.Path = pathStr
-		return url
-	}
-
-	path := urlValues[:valuesLen-1]
-	pathStr := strings.Join(path, "/")
-	fmt.Println("HEREHEREHEREHEREHEREHEREHERE")
-	fmt.Println(path)
-
-	valueIndex := valuesLen - (valuesLen - 2)
-	values := urlValues[valueIndex:]
-	url.Path = pathStr
-	url.Value = values[0]
+	url.Path = urlStr
 
 	return url
 }
