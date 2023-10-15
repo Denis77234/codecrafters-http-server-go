@@ -24,13 +24,14 @@ func parseRequest(req []byte) Request {
 	str := string(req)
 
 	rows := strings.Split(str, "\r\n")
-	fmt.Println(rows)
 
 	firstRowContent := strings.Split(rows[0], " ")
 
 	url := parseURL(firstRowContent[1])
 
 	rows = rows[1 : len(rows)-2]
+
+	fmt.Println(rows)
 
 	//headers := parseHeader(rows)
 	request := Request{
@@ -46,7 +47,6 @@ func parseHeader(headerArr []string) map[string]string {
 	headers := make(map[string]string)
 
 	for _, h := range headerArr {
-		fmt.Println(h)
 		if h == " " {
 			continue
 		}
