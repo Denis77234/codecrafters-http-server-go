@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net"
 	"strings"
 )
@@ -23,6 +24,7 @@ func parseRequest(req []byte) Request {
 	str := string(req)
 
 	rows := strings.Split(str, "\r\n")
+	fmt.Println(rows)
 
 	firstRowContent := strings.Split(rows[0], " ")
 
