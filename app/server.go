@@ -43,6 +43,13 @@ func main() {
 
 	serv := server.New("tcp", "0.0.0.0:4221")
 
+	serv.Handle("/echo", func(req server.Request, w server.ResponseWriter) {
+		value := []byte(req.URL.Value)
+		w.WriteStatus(server.STATUS_200_OK)
+		w.WriteContentType("text/plain")
+		w.WriteBody(value)
+	})
+
 	serv.Handle("/", func(req server.Request, w server.ResponseWriter) {
 		if req.URL.Path != "/" {
 			w.WriteStatus(server.STATUS_404_NOTFOUND)
@@ -50,12 +57,6 @@ func main() {
 		w.WriteStatus(server.STATUS_200_OK)
 	})
 
-	serv.Handle("/echo", func(req server.Request, w server.ResponseWriter) {
-		value := []byte(req.URL.Value)
-		w.WriteStatus(server.STATUS_200_OK)
-		w.WriteContentType("text/plain")
-		w.WriteBody(value)
-	})
 	serv.Start()
 
 }
