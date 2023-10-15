@@ -12,7 +12,7 @@ func (s *Server) getRequest(conn net.Conn) (Request, error) {
 	if err != nil {
 		return Request{}, err
 	}
-	fmt.Println(buf)
+	fmt.Println(len(buf))
 	req := parseRequest(buf)
 
 	return req, nil
