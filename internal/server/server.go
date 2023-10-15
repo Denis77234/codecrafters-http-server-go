@@ -90,7 +90,10 @@ func (s *Server) Start() {
 		os.Exit(1)
 	}
 	defer conn.Close()
-	req, _ := s.getRequest(conn)
+	req, err := s.getRequest(conn)
+	if err != nil {
+		fmt.Println(err)
+	}
 	buffer := make([]byte, 1024)
 
 	_, err = conn.Read(buffer)

@@ -16,7 +16,6 @@ func (s *Server) getRequest(conn net.Conn) (Request, error) {
 		return Request{}, nil
 	}
 	req := parseRequest(buf)
-
 	return req, nil
 }
 
