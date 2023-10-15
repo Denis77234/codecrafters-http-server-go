@@ -72,11 +72,8 @@ func (s *Server) Start() error {
 		return err
 	}
 
-	buf := make([]byte, 0, 1024)
-	conn.Read(buf)
-
 	fmt.Println("hereherehere")
-	fmt.Println(buf)
+	fmt.Println(req)
 
 	for _, h := range s.handlers {
 		if h.path == req.URL.Path {

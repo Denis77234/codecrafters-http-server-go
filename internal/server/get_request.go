@@ -6,7 +6,7 @@ import (
 )
 
 func (s *Server) getRequest(conn net.Conn) (Request, error) {
-	buf := make([]byte, 0, 10)
+	buf := make([]byte, 0, 1024)
 	_, err := conn.Read(buf)
 	if err != nil {
 		return Request{}, err
