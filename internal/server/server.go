@@ -73,6 +73,7 @@ func (s *Server) Start() error {
 	}
 
 	fmt.Println("hereherehere")
+	fmt.Println(s.handlers[0].path, req)
 
 	for _, h := range s.handlers {
 		if h.path == req.URL.Path {
