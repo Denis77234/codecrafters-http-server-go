@@ -46,7 +46,7 @@ func main() {
 	serv := server.New("tcp", "0.0.0.0:4221")
 
 	serv.Handle("/echo", func(req server.Request, w server.ResponseWriter) {
-		str := strings.TrimPrefix(req.URL.Path, "/echo")
+		str := strings.TrimPrefix(req.URL.Path, "/echo/")
 		value := []byte(str)
 		w.WriteStatus(server.STATUS_200_OK)
 		w.WriteContentType("text/plain")
