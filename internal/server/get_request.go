@@ -28,12 +28,28 @@ func parseRequest(req []byte) Request {
 
 	url := parseURL(firstRowContent[1])
 
+	rows = rows[0:]
+
+	headers := parseHeader(rows)
+
 	request := Request{
 		Method: firstRowContent[0],
 		URL:    url,
+		Header: headers,
 	}
 
 	return request
+}
+
+func parseHeader(headerArr []string) map[string]string {
+	headers := make(map[string]string)
+
+	for _, h := range headerArr {
+		header := strings.Split(h, ":")
+		headers[header[0]] = header[1]
+	}
+
+	return headers
 }
 
 func parseURL(urlStr string) URL {
