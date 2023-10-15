@@ -32,12 +32,11 @@ func parseRequest(req []byte) Request {
 
 	rows = rows[1 : len(rows)-2]
 
-	headers := parseHeader(rows)
-	fmt.Println(headers)
+	//headers := parseHeader(rows)
 	request := Request{
 		Method: firstRowContent[0],
 		URL:    url,
-		Header: headers,
+		//Header: headers,
 	}
 
 	return request
