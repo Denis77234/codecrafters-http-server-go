@@ -28,7 +28,7 @@ func (w *rw) WriteBody(body []byte) {
 func (w *rw) makeResponse() []byte {
 	response := append(w.header, w.contentType...)
 	response = append(response, w.body...)
-	response = append(response, []byte("\r\n"))
+	response = append(response, []byte("\r\n")...)
 	return response
 }
 
