@@ -33,7 +33,7 @@ func parseRequest(req []byte) Request {
 	rows = rows[0:]
 
 	headers := parseHeader(rows)
-
+	fmt.Println(headers)
 	request := Request{
 		Method: firstRowContent[0],
 		URL:    url,
