@@ -98,7 +98,9 @@ func (s *Server) Start() {
 		fmt.Printf("my programm read:%v\n", err)
 	}
 
-	fmt.Println(buffer)
+	fmt.Println("HEREHEREHEREHEREHEREHEREHERE")
+
+	fmt.Println(string(buffer))
 
 	_, err = conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
 	if err != nil {
