@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net"
 	"os"
-	"strings"
 )
 
 type status string
@@ -77,7 +76,7 @@ func (s *Server) Start() error {
 
 	handlerExists := false
 	for _, h := range s.handlers {
-		if strings.HasPrefix(req.URL.Path, h.path) {
+		if h.path == req.URL.Path {
 			handlerExists = true
 			h.hadlerFunc(req, h.responseWriter)
 			h.responseWriter.write(conn)

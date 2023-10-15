@@ -39,7 +39,22 @@ func parseRequest(req []byte) Request {
 func parseURL(urlStr string) URL {
 	url := URL{}
 
-	url.Path = urlStr
+	urlValues := strings.Split(urlStr, "/")
+	valuesLen := len(urlValues)
+
+	if valuesLen == 2 {
+		pathStr := strings.Join(urlValues, "/")
+		url.Path = pathStr
+		return url
+	}
+
+	path := urlValues[:1]
+	pathStr := strings.Join(path, "/")
+
+	valueIndex := valuesLen - (valuesLen - 2)
+	values := urlValues[valueIndex:]
+	url.Path = pathStr
+	url.Value = values[0]
 
 	return url
 }
