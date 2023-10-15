@@ -90,7 +90,7 @@ func (s *Server) Start() {
 		os.Exit(1)
 	}
 	defer conn.Close()
-	req, err := s.getRequest(conn)
+	_, err = s.getRequest(conn)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -100,11 +100,6 @@ func (s *Server) Start() {
 	if err != nil {
 		fmt.Printf("my programm read:%v\n", err)
 	}
-
-	fmt.Println("HEREHEREHEREHEREHEREHEREHERE")
-
-	fmt.Println(string(buffer))
-	fmt.Println(req)
 
 	_, err = conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
 	if err != nil {

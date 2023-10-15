@@ -1,7 +1,7 @@
 package server
 
 import (
-	"io"
+	"fmt"
 	"net"
 	"strings"
 )
@@ -9,9 +9,12 @@ import (
 func (s *Server) getRequest(conn net.Conn) (Request, error) {
 	buf := make([]byte, 0, 1024)
 	_, err := conn.Read(buf)
-	if err != nil && err != io.EOF {
+	if err != nil {
 		return Request{}, err
 	}
+	fmt.Println("hereherehereherehereherehere")
+
+	fmt.Println(buf)
 	if len(buf) == 0 {
 		return Request{}, nil
 	}
