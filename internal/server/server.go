@@ -61,17 +61,17 @@ func (s *Server) Handle(path string, handlerFunc HandlerFunc) {
 	s.handlers = append(s.handlers, h)
 }
 
-func (s *Server) Start() error {
+func (s *Server) Start() {
 	conn, err := s.listener.Accept()
 	if err != nil {
-		return err
+
 	}
 	defer s.listener.Close()
 	defer conn.Close()
 
 	_, err = s.getRequest(conn)
 	if err != nil {
-		return err
+		
 	}
 
 	conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
@@ -81,5 +81,4 @@ func (s *Server) Start() error {
 	//		h.responseWriter.write(conn)
 	//	}
 	//}
-	return nil
 }
