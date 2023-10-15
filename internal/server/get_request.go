@@ -12,7 +12,7 @@ func (s *Server) getRequest(conn net.Conn) (Request, error) {
 	if err != nil {
 		return Request{}, err
 	}
-
+	fmt.Println(buf)
 	req := parseRequest(buf)
 
 	return req, nil
@@ -22,8 +22,6 @@ func parseRequest(req []byte) Request {
 	str := string(req)
 
 	rows := strings.Split(str, "\r\n")
-
-	fmt.Println(str)
 
 	firstRowContent := strings.Split(rows[0], " ")
 
