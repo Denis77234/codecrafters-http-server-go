@@ -22,6 +22,25 @@ func getPath(buf []byte) string {
 	return path
 }
 
+func getValue(path string) string {
+	content := strings.Split(path, "/")
+
+	value := content[1]
+
+	return value
+}
+
+func makeBody(value string) []byte {
+
+	contentLength := len(value)
+
+	bodyStr := fmt.Sprintf("Content-Type: text/plain\r\nContent-Length: %v\r\n\r\n%s\r\n", contentLength, value)
+
+	body := []byte(bodyStr)
+
+	return body
+}
+
 func main() {
 	l, err := net.Listen("tcp", "0.0.0.0:4221")
 	if err != nil {
@@ -48,8 +67,11 @@ func main() {
 
 	var response []byte
 
-	if path == "/" {
+	if path == "/echo/abc" {
 		response = responseOk
+		val := getValue(path)
+		body := makeBody(val)
+		response = append(response, body...)
 	} else {
 		response = responseNotOk
 	}
