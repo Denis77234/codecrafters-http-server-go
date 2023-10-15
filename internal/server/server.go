@@ -72,7 +72,7 @@ func (s *Server) Start() error {
 		return err
 	}
 
-	buf := make([]byte, 0, 10)
+	buf := make([]byte, 0, 1024)
 	conn.Read(buf)
 
 	fmt.Println("hereherehere")
