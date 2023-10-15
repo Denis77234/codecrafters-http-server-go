@@ -74,13 +74,17 @@ func (s *Server) Start() error {
 		return err
 	}
 
+	handlerExists := false
 	for _, h := range s.handlers {
 		if h.path == req.URL.Path {
+			handlerExists = true
 			h.hadlerFunc(req, h.responseWriter)
 			h.responseWriter.write(conn)
-		} else {
-			conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 		}
+	}
+	
+	if !handlerExists {
+		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 	}
 
 	return nil
