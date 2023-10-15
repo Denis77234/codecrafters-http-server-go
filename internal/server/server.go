@@ -81,12 +81,13 @@ func (s *Server) Start() error {
 			handlerExists = true
 			h.hadlerFunc(req, h.responseWriter)
 			h.responseWriter.write(conn)
+			break
 		}
 	}
 
 	if !handlerExists {
 		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 	}
-	
+
 	return nil
 }
