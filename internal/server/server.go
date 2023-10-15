@@ -67,6 +67,8 @@ func (s *Server) Start() error {
 		return err
 	}
 
+	defer conn.Close()
+
 	req, err := s.getRequest(conn)
 	if err != nil {
 		return err
