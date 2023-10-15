@@ -90,15 +90,13 @@ func (s *Server) Start() {
 		os.Exit(1)
 	}
 	defer conn.Close()
-
+	req, _ := s.getRequest(conn)
 	buffer := make([]byte, 1024)
 
 	_, err = conn.Read(buffer)
 	if err != nil {
 		fmt.Printf("my programm read:%v\n", err)
 	}
-
-	req, _ := s.getRequest(conn)
 
 	fmt.Println("HEREHEREHEREHEREHEREHEREHERE")
 
