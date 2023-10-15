@@ -46,6 +46,7 @@ func main() {
 	serv.Handle("/", func(req server.Request, w server.ResponseWriter) {
 		if req.URL.Path != "/" {
 			w.WriteStatus(server.STATUS_404_NOTFOUND)
+			return
 		}
 		w.WriteStatus(server.STATUS_200_OK)
 	})
