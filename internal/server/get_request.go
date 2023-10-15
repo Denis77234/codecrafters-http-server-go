@@ -54,7 +54,7 @@ func parseURL(urlStr string) URL {
 
 	fmt.Println(pathStr)
 
-	valueIndex := valuesLen - (valuesLen - 2)
+	valueIndex := valuesLen - (valuesLen - 1)
 	values := urlValues[valueIndex:]
 	url.Path = pathStr
 	url.Value = values[0]
