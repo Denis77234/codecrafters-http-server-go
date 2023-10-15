@@ -12,7 +12,6 @@ func (s *Server) getRequest(conn net.Conn) (Request, error) {
 	if err != nil {
 		return Request{}, err
 	}
-	fmt.Println("hereherehereherehereherehere")
 
 	fmt.Println(buf)
 	if len(buf) == 0 {

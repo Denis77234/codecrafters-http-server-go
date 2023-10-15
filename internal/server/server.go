@@ -61,48 +61,22 @@ func (s *Server) Handle(path string, handlerFunc HandlerFunc) {
 	s.handlers = append(s.handlers, h)
 }
 
-func (s *Server) Start() {
-	//conn, err := s.listener.Accept()
-	//if err != nil {
-	//
-	//}
-	//defer s.listener.Close()
-	//defer conn.Close()
-	//
-	//_, err = s.getRequest(conn)
-	//if err != nil {
-	//
-	//}
-	//
-	//conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
-	//for _, h := range s.handlers {
-	//	if h.path == req.URL.Path {
-	//		h.hadlerFunc(req, h.responseWriter)
-	//		h.responseWriter.write(conn)
-	//	}
-	//}
-
-	defer s.listener.Close()
-
+func (s *Server) Start() error {
 	conn, err := s.listener.Accept()
 	if err != nil {
-		fmt.Println("Error accepting connection: ", err.Error())
-		os.Exit(1)
-	}
-	defer conn.Close()
-	_, err = s.getRequest(conn)
-	if err != nil {
-		fmt.Println(err)
-	}
-	buffer := make([]byte, 1024)
-
-	_, err = conn.Read(buffer)
-	if err != nil {
-		fmt.Printf("my programm read:%v\n", err)
+		return err
 	}
 
-	_, err = conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
+	req, err := s.getRequest(conn)
 	if err != nil {
-		fmt.Printf("my programm write:%v\n", err)
+		return err
 	}
+
+	for _, h := range s.handlers {
+		if h.path == req.URL.Path {
+			h.hadlerFunc(req, h.responseWriter)
+			h.responseWriter.write(conn)
+		}
+	}
+	return nil
 }
