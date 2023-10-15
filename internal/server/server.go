@@ -69,19 +69,17 @@ func (s *Server) Start() error {
 	defer s.listener.Close()
 	defer conn.Close()
 
-	req, err := s.getRequest(conn)
+	_, err = s.getRequest(conn)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("hereherehere")
-	fmt.Println(req)
-
-	for _, h := range s.handlers {
-		if h.path == req.URL.Path {
-			h.hadlerFunc(req, h.responseWriter)
-			h.responseWriter.write(conn)
-		}
-	}
+	conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
+	//for _, h := range s.handlers {
+	//	if h.path == req.URL.Path {
+	//		h.hadlerFunc(req, h.responseWriter)
+	//		h.responseWriter.write(conn)
+	//	}
+	//}
 	return nil
 }
