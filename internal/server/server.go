@@ -78,7 +78,10 @@ func (s *Server) Start() error {
 		if h.path == req.URL.Path {
 			h.hadlerFunc(req, h.responseWriter)
 			h.responseWriter.write(conn)
+		} else {
+			conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 		}
 	}
+
 	return nil
 }
