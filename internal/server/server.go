@@ -72,6 +72,8 @@ func (s *Server) Start() error {
 		return err
 	}
 
+	fmt.Println("hereherehere")
+
 	for _, h := range s.handlers {
 		if h.path == req.URL.Path {
 			h.hadlerFunc(req, h.responseWriter)
