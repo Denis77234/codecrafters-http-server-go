@@ -71,7 +71,7 @@ func (s *Server) Start() {
 
 	_, err = s.getRequest(conn)
 	if err != nil {
-		
+
 	}
 
 	conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
