@@ -6,9 +6,10 @@ import (
 )
 
 type rw struct {
-	header      []byte
-	contentType []byte
-	body        []byte
+	header        []byte
+	contentType   []byte
+	contentLength []byte
+	body          []byte
 }
 
 func (w *rw) WriteStatus(header status) {
@@ -22,7 +23,12 @@ func (w *rw) WriteContentType(ct string) {
 }
 
 func (w *rw) WriteBody(body []byte) {
-	w.body = body
+	length := len(body)
+	cl := fmt.Sprintf("Content-Length: %v\r\n", length)
+	w.contentLength = []byte(cl)
+
+	row := []byte("\r\n")
+	w.body = append(row, body...)
 }
 
 func (w *rw) makeResponse() []byte {

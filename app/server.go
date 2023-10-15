@@ -47,6 +47,12 @@ func main() {
 		w.WriteStatus(server.STATUS_200_OK)
 	})
 
+	serv.Handle("/echo", func(req server.Request, w server.ResponseWriter) {
+		value := []byte(req.URL.Value)
+		w.WriteStatus(server.STATUS_200_OK)
+		w.WriteContentType("text/plain")
+		w.WriteBody(value)
+	})
 	serv.Start()
 
 }
