@@ -33,11 +33,11 @@ func parseRequest(req []byte) Request {
 
 	fmt.Println(rows)
 
-	//headers := parseHeader(rows)
+	headers := parseHeader(rows)
 	request := Request{
 		Method: firstRowContent[0],
 		URL:    url,
-		//Header: headers,
+		Header: headers,
 	}
 
 	return request
@@ -47,9 +47,6 @@ func parseHeader(headerArr []string) map[string]string {
 	headers := make(map[string]string)
 
 	for _, h := range headerArr {
-		if h == " " {
-			continue
-		}
 		header := strings.Split(h, ":")
 		headers[header[0]] = header[1]
 	}
