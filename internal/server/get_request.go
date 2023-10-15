@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net"
 	"strings"
 )
@@ -40,6 +41,7 @@ func parseURL(urlStr string) URL {
 	url := URL{}
 
 	url.Path = urlStr
+	fmt.Println(urlStr)
 
 	return url
 }
