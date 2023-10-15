@@ -45,6 +45,8 @@ func main() {
 	}
 
 	path := getPath(buffer)
+	fmt.Println("HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE")
+	fmt.Println(path)
 
 	var response []byte
 
