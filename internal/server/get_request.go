@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net"
 	"strings"
 )
@@ -48,8 +49,10 @@ func parseURL(urlStr string) URL {
 		return url
 	}
 
-	path := urlValues[:1]
+	path := urlValues[:2]
 	pathStr := strings.Join(path, "/")
+
+	fmt.Println(pathStr)
 
 	valueIndex := valuesLen - (valuesLen - 2)
 	values := urlValues[valueIndex:]
