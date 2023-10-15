@@ -69,7 +69,7 @@ func main() {
 
 	var response []byte
 
-	if path == "/echo/abc" {
+	if path == "/" {
 		response = responseOk
 		val := getValue(path)
 		body := makeBody(val)
