@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"net"
 	"strings"
 )
@@ -13,7 +12,6 @@ func (s *Server) getRequest(conn net.Conn) (Request, error) {
 		return Request{}, err
 	}
 
-	fmt.Println(buf)
 	if len(buf) == 0 {
 		return Request{}, nil
 	}
