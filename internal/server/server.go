@@ -10,7 +10,7 @@ type status string
 
 const (
 	STATUS_200_OK       status = "200 OK"
-	STATUS_404_NOTFOUND status = "HTTP/1.1 404 Not Found\r\n\"
+	STATUS_404_NOTFOUND status = "404 Not Found"
 )
 
 type (

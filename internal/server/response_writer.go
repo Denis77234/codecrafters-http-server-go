@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"net"
 )
 
 type rw struct {
@@ -22,4 +23,14 @@ func (w *rw) WriteContentType(ct string) {
 
 func (w *rw) WriteBody(body []byte) {
 	w.body = body
+}
+
+func (w *rw) makeResponse() []byte {
+	response := append(w.header, w.contentType...)
+	response = append(response, w.body...)
+	return response
+}
+
+func (w rw) write(conn net.Conn) {
+	conn.Write(w.makeResponse())
 }
