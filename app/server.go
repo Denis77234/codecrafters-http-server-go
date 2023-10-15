@@ -17,7 +17,7 @@ func getPath(buf []byte) string {
 
 	firstRowContent := strings.Split(rows[0], " ")
 
-	path := firstRowContent[0]
+	path := firstRowContent[1]
 
 	return path
 }
@@ -45,8 +45,6 @@ func main() {
 	}
 
 	path := getPath(buffer)
-	fmt.Println("HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE")
-	fmt.Println(path)
 
 	var response []byte
 
