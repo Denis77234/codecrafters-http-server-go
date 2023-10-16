@@ -15,16 +15,16 @@ const (
 )
 
 type (
+	Server struct {
+		listener net.Listener
+		handlers []handler
+	}
+
 	ResponseWriter interface {
 		WriteStatus(header status)
 		WriteContentType(ct string)
 		WriteBody(body []byte)
 		write(conn net.Conn)
-	}
-
-	Server struct {
-		listener net.Listener
-		handlers []handler
 	}
 
 	handler struct {
@@ -62,32 +62,37 @@ func (s *Server) Handle(path string, handlerFunc HandlerFunc) {
 	s.handlers = append(s.handlers, h)
 }
 
-func (s *Server) Start() error {
-	conn, err := s.listener.Accept()
-	if err != nil {
-		return err
+func (s *Server) Start() {
+	for {
+		go func() {
+			conn, err := s.listener.Accept()
+			if err != nil {
+				//return err
+			}
+
+			defer conn.Close()
+
+			req, err := s.getRequest(conn)
+			if err != nil {
+				//return err
+			}
+
+			handlerExists := false
+			for _, h := range s.handlers {
+				if strings.HasPrefix(req.URL.Path, h.path) {
+					handlerExists = true
+					h.hadlerFunc(req, h.responseWriter)
+					h.responseWriter.write(conn)
+					break
+				}
+			}
+
+			if !handlerExists {
+				conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
+			}
+
+			//return nil
+		}()
+
 	}
-
-	defer conn.Close()
-
-	req, err := s.getRequest(conn)
-	if err != nil {
-		return err
-	}
-
-	handlerExists := false
-	for _, h := range s.handlers {
-		if strings.HasPrefix(req.URL.Path, h.path) {
-			handlerExists = true
-			h.hadlerFunc(req, h.responseWriter)
-			h.responseWriter.write(conn)
-			break
-		}
-	}
-
-	if !handlerExists {
-		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
-	}
-
-	return nil
 }

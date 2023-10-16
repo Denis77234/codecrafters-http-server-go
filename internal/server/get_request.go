@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"net"
 	"strings"
 )
@@ -30,8 +29,6 @@ func parseRequest(req []byte) Request {
 	url := parseURL(firstRowContent[1])
 
 	rows = rows[1 : len(rows)-2]
-
-	fmt.Println(rows)
 
 	headers := parseHeader(rows)
 	request := Request{
