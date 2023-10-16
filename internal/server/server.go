@@ -81,22 +81,18 @@ func (s *Server) handle(conn net.Conn) error {
 	if !handlerExists {
 		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 	}
-
+	conn.Close()
 	return nil
 }
 
 func (s *Server) Start() error {
-
 	for {
 		conn, err := s.listener.Accept()
 		if err != nil {
 			return err
 		}
 
-		defer conn.Close()
-		
 		go s.handle(conn)
 	}
-
 	return nil
 }
