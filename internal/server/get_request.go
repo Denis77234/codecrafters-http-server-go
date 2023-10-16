@@ -34,7 +34,7 @@ func parseRequest(req []byte) Request {
 	request := Request{
 		Method: firstRowContent[0],
 		URL:    url,
-		Header: headers,
+		Header: &headers,
 	}
 
 	return request
