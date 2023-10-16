@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net"
 	"strings"
 )
@@ -45,6 +46,7 @@ func parseHeader(headerArr []string) map[string]string {
 
 	for _, h := range headerArr {
 		header := strings.Split(h, ":")
+		fmt.Println(h)
 		headers[header[0]] = strings.Trim(header[1], " ")
 	}
 
