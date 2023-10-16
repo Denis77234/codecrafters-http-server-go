@@ -86,14 +86,17 @@ func (s *Server) handle(conn net.Conn) error {
 }
 
 func (s *Server) Start() error {
-	conn, err := s.listener.Accept()
-	if err != nil {
-		return err
+
+	for {
+		conn, err := s.listener.Accept()
+		if err != nil {
+			return err
+		}
+
+		defer conn.Close()
+		
+		go s.handle(conn)
 	}
 
-	defer conn.Close()
-
-	go s.handle(conn)
-	
 	return nil
 }
