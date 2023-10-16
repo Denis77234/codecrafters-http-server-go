@@ -43,6 +43,9 @@ func parseRequest(req []byte) Request {
 
 func parseHeader(headerArr []string) map[string]string {
 	headers := make(map[string]string)
+	if len(headerArr) == 0 {
+		return headers
+	}
 	fmt.Println(headerArr)
 	for _, h := range headerArr {
 		header := strings.Split(h, ":")
