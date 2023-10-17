@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"flag"
-	"log"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -23,11 +23,12 @@ func main() {
 		path := filepath.Join(*dir, filename)
 		if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
 			w.WriteStatus(server.STATUS_404_NOTFOUND)
+			fmt.Println(path)
 			return
 		}
 		file, err := os.ReadFile(path)
 		if err != nil {
-			log.Println(err)
+			fmt.Println(err)
 			w.WriteStatus(server.STATUS_404_NOTFOUND)
 			return
 		}
