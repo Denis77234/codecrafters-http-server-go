@@ -18,8 +18,8 @@ func main() {
 
 	serv := server.New("tcp", "0.0.0.0:4221")
 
-	serv.AddHandler("/file", func(req server.Request, w server.ResponseWriter) {
-		filename := strings.TrimPrefix(req.URL.Path, "/file/")
+	serv.AddHandler("/files", func(req server.Request, w server.ResponseWriter) {
+		filename := strings.TrimPrefix(req.URL.Path, "/files/")
 		path := filepath.Join(*dir, filename)
 		if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
 			w.WriteStatus(server.STATUS_404_NOTFOUND)
