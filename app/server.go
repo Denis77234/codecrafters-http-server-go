@@ -19,23 +19,30 @@ func main() {
 	serv := server.New("tcp", "0.0.0.0:4221")
 
 	serv.AddHandler("/files", func(req server.Request, w server.ResponseWriter) {
-		filename := strings.TrimPrefix(req.URL.Path, "/files/")
-		path := filepath.Join(*dir, filename)
-		if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
-			w.WriteStatus(server.STATUS_404_NOTFOUND)
-			fmt.Println(path)
-			return
-		}
-		file, err := os.ReadFile(path)
-		if err != nil {
-			fmt.Println(err)
-			w.WriteStatus(server.STATUS_404_NOTFOUND)
-			return
-		}
+		if req.Method == server.METHOD_GET {
+			filename := strings.TrimPrefix(req.URL.Path, "/files/")
+			path := filepath.Join(*dir, filename)
+			if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
+				w.WriteStatus(server.STATUS_404_NOTFOUND)
+				return
+			}
+			file, err := os.ReadFile(path)
+			if err != nil {
+				fmt.Println(err)
+				w.WriteStatus(server.STATUS_404_NOTFOUND)
+				return
+			}
 
-		w.WriteStatus(server.STATUS_200_OK)
-		w.WriteContentType("application/octet-stream")
-		w.WriteBody(file)
+			w.WriteStatus(server.STATUS_200_OK)
+			w.WriteContentType("application/octet-stream")
+			w.WriteBody(file)
+		}
+		if req.Method == server.METHOD_POST {
+
+			filename := strings.TrimPrefix(req.URL.Path, "/files/")
+			path := filepath.Join(*dir, filename)
+
+		}
 	})
 
 	serv.AddHandler("/user-agent", func(req server.Request, w server.ResponseWriter) {

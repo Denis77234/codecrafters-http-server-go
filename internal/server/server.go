@@ -10,8 +10,11 @@ import (
 type status string
 
 const (
-	STATUS_200_OK       status = "200 OK"
-	STATUS_404_NOTFOUND status = "404 Not Found"
+	STATUS_200_OK         status = "200 OK"
+	STATUS_404_NOTFOUND   status = "404 Not Found"
+	STATUS_405_NOTALLOWED status = "HTTP/1.1 405 Method Not Allowed"
+	METHOD_GET            string = "GET"
+	METHOD_POST           string = "POST"
 )
 
 type (

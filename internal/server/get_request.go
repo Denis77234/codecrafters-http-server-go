@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net"
 	"strings"
 )
@@ -23,6 +24,9 @@ func parseRequest(req []byte) Request {
 	str := string(req)
 
 	rows := strings.Split(str, "\r\n")
+
+	fmt.Println("HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE")
+	fmt.Println(rows)
 
 	firstRowContent := strings.Split(rows[0], " ")
 
@@ -60,4 +64,8 @@ func parseURL(urlStr string) URL {
 	url.Path = urlStr
 
 	return url
+}
+
+func findEndOfHeader() {
+
 }
