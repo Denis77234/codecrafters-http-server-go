@@ -73,7 +73,7 @@ func (s *Server) handle(conn net.Conn) error {
 
 	handlerExists := false
 	for _, h := range s.handlers {
-		if strings.HasPrefix(req.URL.Path, h.path) {
+		if strings.HasPrefix(req.URL, h.path) {
 			handlerExists = true
 			h.hadlerFunc(req, h.responseWriter)
 			h.responseWriter.write(conn)

@@ -20,7 +20,7 @@ func main() {
 
 	serv.AddHandler("/files", func(req server.Request, w server.ResponseWriter) {
 		if req.Method == server.METHOD_GET {
-			filename := strings.TrimPrefix(req.URL.Path, "/files/")
+			filename := strings.TrimPrefix(req.URL, "/files/")
 			path := filepath.Join(*dir, filename)
 			if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
 				w.WriteStatus(server.STATUS_404_NOTFOUND)
@@ -56,7 +56,7 @@ func main() {
 	})
 
 	serv.AddHandler("/echo", func(req server.Request, w server.ResponseWriter) {
-		str := strings.TrimPrefix(req.URL.Path, "/echo/")
+		str := strings.TrimPrefix(req.URL, "/echo/")
 		value := []byte(str)
 		w.WriteStatus(server.STATUS_200_OK)
 		w.WriteContentType("text/plain")
@@ -64,7 +64,7 @@ func main() {
 	})
 
 	serv.AddHandler("/", func(req server.Request, w server.ResponseWriter) {
-		if req.URL.Path != "/" {
+		if req.URL != "/" {
 			w.WriteStatus(server.STATUS_404_NOTFOUND)
 			return
 		}

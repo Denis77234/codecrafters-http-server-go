@@ -1,9 +1,14 @@
 package server
 
 import (
-	"fmt"
+	"bytes"
+	"errors"
 	"net"
 	"strings"
+)
+
+var (
+	errBadRequest = errors.New("bad request")
 )
 
 func (s *Server) getRequest(conn net.Conn) (Request, error) {
@@ -16,58 +21,62 @@ func (s *Server) getRequest(conn net.Conn) (Request, error) {
 	if len(buf) == 0 {
 		return Request{}, nil
 	}
-	req := parseRequest(buf)
+	req, err := parseRequest(buf)
+	if err != nil {
+		return Request{}, err
+	}
 	return req, nil
 }
 
-func parseRequest(req []byte) Request {
-	str := string(req)
-
-	rows := strings.Split(str, "\r\n")
-
-	for _, row := range rows {
-		fmt.Println(row)
-		fmt.Println(row == "", row == "\r\n")
+func parseRequest(req []byte) (Request, error) {
+	header, body, err := splitHeaderAndBody(req)
+	if err != nil {
+		return Request{}, err
 	}
+	headerRows := bytes.Split(header, []byte("\r\n"))
 
-	firstRowContent := strings.Split(rows[0], " ")
+	firstRowBytes := headerRows[0]
+	firstRowStr := string(firstRowBytes)
+	firstRowContent := strings.Split(firstRowStr, " ")
 
-	url := parseURL(firstRowContent[1])
+	rawHeaders := headerRows[0:]
 
-	rows = rows[1 : len(rows)-2]
+	headers := parseHeader(rawHeaders)
 
-	headers := parseHeader(rows)
 	request := Request{
 		Method: firstRowContent[0],
-		URL:    url,
+		URL:    firstRowContent[1],
 		Header: headers,
+		Body:   body,
 	}
 
-	return request
+	return request, nil
 }
 
-func parseHeader(headerArr []string) map[string]string {
+func splitHeaderAndBody(rows []byte) (header []byte, body []byte, err error) {
+
+	indOfSeparator := bytes.Index(rows, []byte("\r\n\r\n"))
+	if indOfSeparator == -1 {
+		return nil, nil, errBadRequest
+	}
+
+	header = rows[:indOfSeparator]
+	body = rows[indOfSeparator+4:]
+
+	return header, body, nil
+}
+
+func parseHeader(headerArr [][]byte) map[string]string {
 	headers := make(map[string]string)
-	if len(headerArr) == 0 || len(headerArr) == 1 && headerArr[0] == "" {
+	if len(headerArr) == 0 {
 		return headers
 	}
 	for _, h := range headerArr {
+		h := string(h)
 		header := strings.Split(h, ":")
 
 		headers[header[0]] = strings.Trim(header[1], " ")
 	}
 
 	return headers
-}
-
-func parseURL(urlStr string) URL {
-	url := URL{}
-
-	url.Path = urlStr
-
-	return url
-}
-
-func findEndOfHeader() {
-
 }
