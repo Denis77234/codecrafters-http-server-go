@@ -12,7 +12,8 @@ type status string
 const (
 	STATUS_200_OK         status = "200 OK"
 	STATUS_404_NOTFOUND   status = "404 Not Found"
-	STATUS_405_NOTALLOWED status = "HTTP/1.1 405 Method Not Allowed"
+	STATUS_405_NOTALLOWED status = "405 Method Not Allowed"
+	STATUS_201_CREATED    status = "201 Created"
 	METHOD_GET            string = "GET"
 	METHOD_POST           string = "POST"
 )
