@@ -42,7 +42,7 @@ func main() {
 			path := filepath.Join(*dir, filename)
 
 			os.WriteFile(path, req.Body, 0644)
-			w.WriteStatus(server.STATUS_200_OK)
+			w.WriteStatus(server.STATUS_201_CREATED)
 		}
 	})
 
