@@ -37,12 +37,17 @@ func main() {
 			w.WriteContentType("application/octet-stream")
 			w.WriteBody(file)
 		}
-		//if req.Method == server.METHOD_POST {
-		//
-		//	filename := strings.TrimPrefix(req.URL.Path, "/files/")
-		//	path := filepath.Join(*dir, filename)
-		//
-		//}
+		if req.Method == server.METHOD_POST {
+			filename := strings.TrimPrefix(req.URL, "/files/")
+			path := filepath.Join(*dir, filename)
+			if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
+				w.WriteStatus(server.STATUS_404_NOTFOUND)
+				return
+			}
+
+			os.WriteFile(path, req.Body, 0644)
+			w.WriteStatus(server.STATUS_200_OK)
+		}
 	})
 
 	serv.AddHandler("/user-agent", func(req server.Request, w server.ResponseWriter) {

@@ -42,9 +42,6 @@ func parseRequest(req []byte) (Request, error) {
 
 	rawHeaders := headerRows[1:]
 	fmt.Println(string(body))
-	for _, rawHeader := range rawHeaders {
-		fmt.Println(string(rawHeader))
-	}
 
 	headers := parseHeader(rawHeaders)
 
