@@ -36,13 +36,13 @@ func parseRequest(req []byte) (Request, error) {
 	}
 	headerRows := bytes.Split(header, []byte("\r\n"))
 
-	fmt.Println(headerRows)
-
 	firstRowBytes := headerRows[0]
 	firstRowStr := string(firstRowBytes)
 	firstRowContent := strings.Split(firstRowStr, " ")
 
 	rawHeaders := headerRows[0:]
+	fmt.Println("HEREHEREHEREHEREHERE")
+	fmt.Println(rawHeaders)
 
 	headers := parseHeader(rawHeaders)
 
