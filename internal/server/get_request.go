@@ -41,7 +41,7 @@ func parseRequest(req []byte) (Request, error) {
 	firstRowContent := strings.Split(firstRowStr, " ")
 
 	rawHeaders := headerRows[1:]
-	fmt.Println("HEREHEREHEREHEREHERE")
+	fmt.Println(string(body))
 	for _, rawHeader := range rawHeaders {
 		fmt.Println(string(rawHeader))
 	}
