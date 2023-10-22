@@ -3,6 +3,7 @@ package server
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"net"
 	"strings"
 )
@@ -34,6 +35,8 @@ func parseRequest(req []byte) (Request, error) {
 		return Request{}, err
 	}
 	headerRows := bytes.Split(header, []byte("\r\n"))
+
+	fmt.Println(headerRows)
 
 	firstRowBytes := headerRows[0]
 	firstRowStr := string(firstRowBytes)
