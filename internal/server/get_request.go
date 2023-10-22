@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net"
+	"strconv"
 	"strings"
 )
 
@@ -44,6 +45,16 @@ func parseRequest(req []byte) (Request, error) {
 	fmt.Println(string(body))
 
 	headers := parseHeader(rawHeaders)
+
+	if len(body) > 0 {
+		cLenStr, ok := headers["Content-Length"]
+		if ok {
+			cLen, err := strconv.Atoi(cLenStr)
+			if err == nil {
+				body = body[:cLen]
+			}
+		}
+	}
 
 	request := Request{
 		Method: firstRowContent[0],
