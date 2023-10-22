@@ -25,8 +25,10 @@ func parseRequest(req []byte) Request {
 
 	rows := strings.Split(str, "\r\n")
 
-	fmt.Println("HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE")
-	fmt.Println(rows)
+	for _, row := range rows {
+		fmt.Println(row)
+		fmt.Println(row == "", row == "\r\n")
+	}
 
 	firstRowContent := strings.Split(rows[0], " ")
 
