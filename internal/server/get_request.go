@@ -40,7 +40,7 @@ func parseRequest(req []byte) (Request, error) {
 	firstRowStr := string(firstRowBytes)
 	firstRowContent := strings.Split(firstRowStr, " ")
 
-	rawHeaders := headerRows[0:]
+	rawHeaders := headerRows[1:]
 	fmt.Println("HEREHEREHEREHEREHERE")
 	for _, rawHeader := range rawHeaders {
 		fmt.Println(string(rawHeader))
